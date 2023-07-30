@@ -17,23 +17,27 @@ import {
 import React, { useState } from "react";
 
 export default function ManualClose({ isOpen, onClose, onSubmit }) {
- 
   const [question, setQuestion] = useState("");
   const [answerType, setAnswerType] = useState("Text");
   const [choices, setChoices] = useState("");
- 
- // console.log(answerType)
+
+  // console.log(answerType)
 
   const handleAdd = () => {
-    const questionData = { title: question, answerType,
-        
-      choices: answerType === 'Multichoice Checkbox' || answerType === 'Single Select radio' ? choices.split('\n').map((choice) => choice.trim()) : [],
-  };
-  onSubmit(questionData);
-  setQuestion('');
-  setAnswerType('Text');
-  setChoices('');
-    
+    const questionData = {
+      title: question,
+      answerType,
+
+      choices:
+        answerType === "Multichoice Checkbox" ||
+        answerType === "Single Select radio"
+          ? choices.split("\n").map((choice) => choice.trim())
+          : [],
+    };
+    onSubmit(questionData);
+    setQuestion("");
+    setAnswerType("Text");
+    setChoices("");
   };
 
   return (
@@ -44,13 +48,13 @@ export default function ManualClose({ isOpen, onClose, onSubmit }) {
           <ModalHeader>Add Question</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-           <FormLabel>Type your Question Below:</FormLabel>
+            <FormLabel>Type your Question Below:</FormLabel>
             <Input
               type="text"
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
               placeholder="enter your question here ?"
-           />
+            />
             <Select
               value={answerType}
               onChange={(e) => setAnswerType(e.target.value)}
@@ -59,11 +63,13 @@ export default function ManualClose({ isOpen, onClose, onSubmit }) {
               <option value="Multichoice Checkbox">Multichoice Checkbox</option>
               <option value="Single Select radio">Single Select radio</option>
             </Select>
-            <Textarea 
-            value={choices}
-            onChange={(e) => setChoices(e.target.value)}
-             />
-                       
+            {(answerType === "Multichoice Checkbox" ||
+              answerType === "Single Select radio") && (
+              <Textarea
+                value={choices}
+                onChange={(e) => setChoices(e.target.value)}
+              />
+            )}
           </ModalBody>
 
           <ModalFooter>
